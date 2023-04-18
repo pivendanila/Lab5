@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<SpaceMarines>
+	<SpaceMarine>
+		<id>1</id>
+		<name>w</name>
+		<coordinates>w</coordinates>
+		<time>w</time>
+		<health>w</health>
+		<loyal>w</loyal>
+		<achievements>w</achievements>
+		<category>w</category>
+		<chapter>w</chapter>
+	</SpaceMarine>
+</SpaceMarines>
