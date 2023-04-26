@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 public class CollectionManager {
     private final Path path;
-    private final LinkedList<SpaceMarine> spacemarines;
+    final LinkedList<SpaceMarine> spacemarines;
 
 
     public CollectionManager(Path filepath) {
@@ -56,17 +56,10 @@ public class CollectionManager {
 
     public String show(){
         String result = "";
-        for (SpaceMarine spacemarine : spacemarines) {
-            System.out.println(spacemarine.getName());
-            System.out.println(spacemarine.getAchievements());
-            System.out.println(spacemarine.getCategory());
-            System.out.println(spacemarine.getHealth());
-            System.out.println(spacemarine.getChapter());
-            System.out.println(spacemarine.getCreationDate());
-            System.out.println(spacemarine.getLoyal());
-            System.out.println(spacemarine.getCoordinates());
+        for (SpaceMarine spacemarine : this.spacemarines) {
+            result += spacemarine.getName()+ "\n" + spacemarine.getCoordinates() + "\n" + spacemarine.getHealth() + "\n" + spacemarine.getLoyal() + "\n" + spacemarine.getAchievements() + "\n" + spacemarine.getCategory() + "\n" + spacemarine.getChapter() + "\n\n";
         }
-        return result.toString();
+        return result;
     }
 
     public void fill_from_file() {
@@ -94,7 +87,6 @@ public class CollectionManager {
                         Node bookProp = bookProps.item(j);
                         if (bookProp.getNodeType() != Node.TEXT_NODE) {
                             if (i % 2 != 0 && j % 2 != 0) {
-                                System.out.println(bookProp.getChildNodes().item(0).getTextContent());
                                 switch (bookProp.getNodeName()) {
                                     case "name":
                                         spacemarine.setName(bookProp.getChildNodes().item(0).getTextContent());
@@ -115,18 +107,18 @@ public class CollectionManager {
                                         spacemarine.setCategory(AstartesCategory.valueOf(bookProp.getChildNodes().item(0).getTextContent()));
                                         break;
                                     case "chapter":
-                                        spacemarine.setName(bookProp.getChildNodes().item(0).getTextContent());
+                                        spacemarine.setChapter(bookProp.getChildNodes().item(0).getTextContent());
                                         break;
                                 }
                             }
                         }
                     }
                 }
-                if(i % 2 != 0) {
-                    cnt++;
+                if(i > 0 && i % 2 != 0) {
+                    System.out.println(spacemarine);
                     spacemarines.add(spacemarine);
-                    System.out.println("End of "+cnt);
                 }
+
             }
 
         } catch (ParserConfigurationException | SAXException | IOException ex) {

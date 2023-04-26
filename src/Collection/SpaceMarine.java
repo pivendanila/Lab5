@@ -18,7 +18,7 @@ public class SpaceMarine {
     private AstartesCategory category; //Поле не может быть null
     private Chapter chapter; //Поле может быть null
 
-    public void SpaceMarine(){
+    public SpaceMarine(){
         this.setCreationDate();
     }
     public int get_id(){
@@ -42,9 +42,8 @@ public class SpaceMarine {
     public void setCategory(AstartesCategory category){
         this.category = category;
     }
-    public void setChapter(String name, String legion){
-        this.chapter.setName(name);
-        this.chapter.setParentLegion(legion);
+    public void setChapter(String chapter){
+        this.chapter = new Chapter(chapter);
     }
     public void setCreationDate(){
         this.creationDate = java.time.ZonedDateTime.now();
@@ -56,12 +55,13 @@ public class SpaceMarine {
     public AstartesCategory getCategory() {
         return this.category;
     }
-    public Chapter getChapter() {
-        return this.chapter;
+    public String getChapter() {
+        return this.chapter.getName()+" "+this.chapter.getParentLegion();
     }
-    public Coordinates getCoordinates() {
-        return this.coordinates;
+    public String getCoordinates() {
+            return this.coordinates.getX()+" "+this.coordinates.getY();
     }
+
     public Float getHealth() {
         return this.health;
     }
