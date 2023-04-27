@@ -17,17 +17,6 @@ public class RemoveById implements Command{
 
     public RemoveById(CollectionManager manager) {
         this.manager=manager;
-        while (true) {
-            Scanner commandReader = new Scanner(System.in);
-            try {
-                System.out.println("Enter ID of Marine");
-                manager.remove_at_index(manager.getById(Integer.parseInt(commandReader.nextLine())));
-                break;
-            } catch (WrongField | NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                System.out.println("Wrong name. " + e.getMessage());
-            }
-        }
-        manager.updateHistory(getName());
     }
 
     @Override
@@ -38,6 +27,17 @@ public class RemoveById implements Command{
 
     @Override
     public void execute(String[] args) throws WrongArgument, NotEnoughArguments {
+        manager.updateHistory(getName());
+        while (true) {
+            Scanner commandReader = new Scanner(System.in);
+            try {
+                System.out.println("Enter ID of Marine");
+                manager.remove_at_index(manager.getById(Integer.parseInt(commandReader.nextLine())));
+                break;
+            } catch (WrongField | NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                System.out.println("Wrong name. " + e.getMessage());
+            }
+        }
         manager.updateHistory(getName());
     }
 

@@ -23,7 +23,6 @@ import java.util.LinkedList;
  * Class of Manager working with collection of Space Marines.
  * * @author Piven Danila @pivendanila.
 */
-
 public class CollectionManager {
     private final Path path;
     final LinkedList<SpaceMarine> spacemarines;

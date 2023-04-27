@@ -15,10 +15,9 @@ public class Executor {
 
     /**
      * Class of Executor. Works with command line. Read commands and execute them.
+     *
      * @author Piven Danila @pivendanila.
      */
-
-
     public Executor(CollectionManager collectionManager) {
         this.manager = collectionManager;
         this.commands = new HashMap<>();
@@ -55,30 +54,32 @@ public class Executor {
         commands.put(filter.getName(), filter);
         commands.put(print.getName(), print);
     }
+
     /**
      * Method for entering the Interective mode.
      */
-    public void interactiveMod(){
+    public void interactiveMod() {
         System.out.println("Interective mode entered");
         Scanner commandReader = new Scanner(System.in);
-        while(true){
+        boolean t = true;
+        while (t) {
             System.out.println("\nEnter the command");
-            try{
+            try {
                 String[] argsArray = parseInput(commandReader.nextLine());
 
                 Command command = getCommand(argsArray[0]);
 
-                if (command == null){
+                if (command == null) {
                     System.out.println("Not a command.");
                     continue;
                 }
                 command.execute(argsArray);
 
 
-            }catch (WrongArgument e){
+            } catch (WrongArgument e) {
                 System.out.println("Wrong argument." + e.getMessage());
-            }
-            catch (NotEnoughArguments e){
+            } catch (NotEnoughArguments | NoSuchElementException e) {
+                t = false;
                 System.out.println("Not enough arguments. " + e.getMessage());
             }
         }
@@ -86,11 +87,11 @@ public class Executor {
     }
 
     private String[] parseInput(String line) {
-        if(line.length() == 0) return new String[]{""};
+        if (line.length() == 0) return new String[]{""};
         Matcher mather = Pattern.compile("[^\" ]+|\"[^\"]*\"").matcher(line);
 
         ArrayList<String> list = new ArrayList<>();
-        while (mather.find()){
+        while (mather.find()) {
             list.add(mather.group().replaceAll("\"", ""));
         }
         String[] argsArray = new String[list.size()];
@@ -98,8 +99,9 @@ public class Executor {
         argsArray[0] = argsArray[0].toLowerCase();
         return argsArray;
     }
-    private Command getCommand(String command){
-        if(!commands.containsKey(command)){
+
+    private Command getCommand(String command) {
+        if (!commands.containsKey(command)) {
             return null;
         }
         return commands.get(command);
