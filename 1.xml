@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <SpaceMarines>
 	<SpaceMarine>
-		<name>w</name>
-		<coordinates>1 22</coordinates>
+		<name>Marine1</name>
+		<coordinates>3 22</coordinates>
 		<health>100</health>
-		<loyal>1</loyal>
-		<achievements>w</achievements>
+		<loyal>true</loyal>
+		<achievements>Prog</achievements>
 		<category>SCOUT</category>
-		<chapter>rl pr</chapter>
+		<chapter>rr prpr</chapter>
 	</SpaceMarine>
 	<SpaceMarine>
-		<name>w</name>
-		<coordinates>3 3</coordinates>
+		<name>Marine 2</name>
+		<coordinates>45 33</coordinates>
 		<health>20</health>
-		<loyal>0</loyal>
-		<achievements>w</achievements>
+		<loyal>false</loyal>
+		<achievements>NoProg</achievements>
 		<category>SCOUT</category>
-		<chapter>pr rl</chapter>
+		<chapter>trr rfvl</chapter>
 	</SpaceMarine>
 </SpaceMarines>

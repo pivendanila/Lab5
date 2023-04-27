@@ -1,4 +1,6 @@
-package Collection;
+package Collections;
+
+import Exceptions.WrongField;
 
 public class Coordinates {
     private float x; //Значение поля должно быть больше -374
@@ -7,6 +9,7 @@ public class Coordinates {
     public Coordinates(String coordinates) {
         this.setX(coordinates.split(" ")[0]);
         this.setY(coordinates.split(" ")[1]);
+
     }
     public void setX(String x) {
         this.x = Float.parseFloat(x);
