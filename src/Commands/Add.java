@@ -65,7 +65,19 @@ public class Add implements Command{
             Scanner commandReader = new Scanner(System.in);
             try {
                 System.out.println("Enter a Marine loyalty (True/False)");
-                marine.setLoyal(Boolean.parseBoolean(commandReader.nextLine().toLowerCase(Locale.ROOT)));
+                String inp = commandReader.nextLine().toLowerCase();
+                if(!inp.equals("false") && !inp.equals("true") && !inp.equals("1") && !inp.equals("0")){
+                    System.out.println("Wrong Argument.");
+                    continue;
+                }
+                else {
+                    if(inp.equals("true") || inp.equals("1")){
+                        marine.setLoyal(true);
+                    }
+                    if(inp.equals("false") || inp.equals("0")){
+                        marine.setLoyal(false);
+                    }
+                }
                 break;
             } catch (WrongField e) {
                 System.out.println("Wrong loyalty. " + e.getMessage());
