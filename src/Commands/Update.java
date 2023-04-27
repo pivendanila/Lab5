@@ -10,6 +10,10 @@ import Run.CollectionManager;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Class for updating the element by ID.
+ * @author Piven Danila @pivendanila.
+ */
 public class Update implements Command{
     public String name = "update_id";
     private CollectionManager manager;

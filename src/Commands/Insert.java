@@ -10,6 +10,11 @@ import Run.CollectionManager;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Class for Inserting the element in collection by index.
+ * @author Piven Danila @pivendanila.
+ */
+
 public class Insert implements Command{
     private String name = "insert_at";
     private CollectionManager manager;

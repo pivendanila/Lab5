@@ -4,6 +4,11 @@ import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 import Run.CollectionManager;
 
+/**
+ * Class for displaying the History of commands.
+ * @author Piven Danila @pivendanila.
+ */
+
 public class History implements Command{
     private String name = "history";
     private CollectionManager manager;

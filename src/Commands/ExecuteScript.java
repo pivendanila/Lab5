@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class for Executing Scripts from files.
+ * @author Piven Danila @pivendanila.
+ */
 public class ExecuteScript implements Command{
     CollectionManager manager;
     HashMap<String, Command> commands;

@@ -9,6 +9,10 @@ import Run.CollectionManager;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * Class for filtering collection by greating the loyalty.
+ * @author Piven Danila @pivendanila.
+ */
 public class FilterGreater implements Command{
     private String name = "filter_greater_than_loyal";
     private CollectionManager manager;

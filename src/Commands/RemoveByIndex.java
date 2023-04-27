@@ -7,6 +7,10 @@ import Run.CollectionManager;
 
 import java.util.Scanner;
 
+/**
+ * Class for Removing elements by Index.
+ * @author Piven Danila @pivendanila.
+ */
 public class RemoveByIndex implements Command{
     private String name = "remove_at";
     CollectionManager manager;

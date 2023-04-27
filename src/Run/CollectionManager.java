@@ -1,5 +1,6 @@
 package Run;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,8 +17,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import java.nio.file.Path;
-import java.sql.PreparedStatement;
 import java.util.LinkedList;
+
+/**
+ * Class of Manager working with collection of Space Marines.
+ * * @author Piven Danila @pivendanila.
+*/
 
 public class CollectionManager {
     private final Path path;
@@ -34,9 +39,15 @@ public class CollectionManager {
         this.type = String.valueOf(spacemarines.getClass());
         this.date = java.time.ZonedDateTime.now();
     }
+    /**
+     * Method of updating History of commands.
+     */
     public void updateHistory(String name){
         this.history += name+" ";
     }
+    /**
+     * Method of updating indexes of Space Marines in collection.
+     */
     public void update(){
         number_of_marines=-1;
         for(int i = 0; i < this.spacemarines.size(); i++){
@@ -44,11 +55,15 @@ public class CollectionManager {
             number_of_marines++;
         }
     }
-
+    /**
+     * getter for History
+     */
     public String getHistory() {
         return history;
     }
-
+    /**
+     * Method for forming information about info.
+     */
     public String info() {
         String result = "";
         result += "Type: " + this.type + "\n" + "Init. Date: " + this.date.getDayOfMonth() + "." + this.date.getMonth()
@@ -56,7 +71,9 @@ public class CollectionManager {
                 "\nSpacemarines: " + this.spacemarines.size();
         return result;
     }
-
+    /**
+     * Method of adding new element to the collection.
+     */
     public void add(SpaceMarine spacemarine) {
         this.number_of_marines++;
         spacemarine.setIndex(number_of_marines);
@@ -64,10 +81,16 @@ public class CollectionManager {
         spacemarines.add(spacemarine);
     }
 
+    /**
+     * Method of clearing the collection.
+     */
     public void clear() {
         spacemarines.clear();
     }
 
+    /**
+     * Method of getting element from collection by ID.
+     */
     public int getById(int Id) {
         for (SpaceMarine marine : spacemarines) {
             if (marine.getId() == Id) {
@@ -77,11 +100,17 @@ public class CollectionManager {
         return 0;
     }
 
+    /**
+     * Method of removing element by Index.
+     */
     public void remove_at_index(int index) {
         spacemarines.remove(index);
         update();
     }
 
+    /**
+     * Method of removing.
+     */
     public void remove_at_id(int id) {
         for (int index = 0; index < spacemarines.size(); index++) {
             if (spacemarines.get(index).getId() == id) {
@@ -90,19 +119,31 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * Method of inserting element by index to the collection.
+     */
     public void insert_at_index(int index, SpaceMarine marine) {
         spacemarines.add(index, marine);
         update();
     }
 
+    /**
+     * getter for collection of Space Marines.
+     */
     public LinkedList<SpaceMarine> getSpacemarines() {
         return spacemarines;
     }
 
+    /**
+     * Method of updating element by ID.
+     */
     public void update_id(int id, SpaceMarine spacemarine) {
         this.remove_at_id(id);
     }
 
+    /**
+     * Method of displaying content of the collection.
+     */
     public String show() {
         String result = "";
         int i = 0;
@@ -121,6 +162,9 @@ public class CollectionManager {
             return result;
         }
     }
+    /**
+     * Generator of enough random IDs
+     */
     public int idGenerator(){
         String letters = "12345";
         char[] chars = letters.toCharArray();
@@ -135,6 +179,9 @@ public class CollectionManager {
         return Integer.parseInt(result);
     }
 
+    /**
+     * Method of displaying content of certain collection
+     */
     public String show(LinkedList<SpaceMarine> marines) {
         String result = "";
         if (marines.size() == 0) {
@@ -155,6 +202,9 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * Method of filling collection from .xml file
+     */
     public void fill_from_file() {
         try {
             int cnt = 0;
@@ -219,6 +269,30 @@ public class CollectionManager {
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             ex.printStackTrace(System.out);
         }
+    }
+
+    /**
+     * Method of saving collection to the .xml file
+     */
+    public void save() throws IOException {
+        FileWriter fw = new FileWriter( "saved.xml");
+        fw.write("<?xml version=\"1.0\"?>\n");
+        fw.write("<SpaceMarines>\n");
+        for(SpaceMarine marine : spacemarines) {
+            fw.write("\t<SpaceMarine>\n");
+            fw.write("\t\t<name>"+marine.getName()+"</name>\n");
+            fw.write("\t\t<coordinates>"+marine.getCoordinates()+"</coordinates>\n");
+            fw.write("\t\t<health>"+marine.getHealth()+"</health>\n");
+            fw.write("\t\t<loyal>"+marine.getLoyal()+"</loyal>\n");
+            fw.write("\t\t<achievements>" + marine.getAchievements()+ "</achievements>\n");
+            fw.write("\t\t<category>"+marine.getCategory()+"</category>\n");
+            fw.write("\t\t<chapter>"+marine.getChapter()+"</chapter>\n");
+            fw.write("\t</SpaceMarine>\n");
+        }
+        fw.write("</SpaceMarines>");
+
+        fw.close();
+
     }
 
 }

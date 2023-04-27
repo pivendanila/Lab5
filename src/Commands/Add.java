@@ -10,6 +10,10 @@ import Run.CollectionManager;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Class for Adding new elemnts.
+ * @author Piven Danila @pivendanila.
+ */
 public class Add implements Command{
     private String name = "add";
     private final CollectionManager manager;
@@ -21,6 +25,7 @@ public class Add implements Command{
     public String getName() {
         return this.name;
     }
+
 
     @Override
     public void execute(String[] args) throws WrongArgument, NotEnoughArguments {

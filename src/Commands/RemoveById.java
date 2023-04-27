@@ -7,6 +7,10 @@ import Run.CollectionManager;
 
 import java.util.Scanner;
 
+/**
+ * Class for Removing element by Id.
+ * @author Piven Danila @pivendanila.
+ */
 public class RemoveById implements Command{
     private String name = "remove_by_id";
     private CollectionManager manager;

@@ -4,6 +4,10 @@ import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 import Run.CollectionManager;
 
+/**
+ * Class for savinf the collection to the file.
+ * @author Piven Danila @pivendanila.
+ */
 public class Save implements Command{
     private String name = "save";
     private CollectionManager manager;

@@ -3,6 +3,10 @@ package Commands;
 import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 
+/**
+ * Class for Terminating the programm.
+ * @author Piven Danila @pivendanila.
+ */
 public class Exit implements Command{
     private String name = "exit";
 

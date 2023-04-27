@@ -1,19 +1,22 @@
 package Collections;
 
-import java.time.ZonedDateTime;
 
 public class SpaceMarine {
     private Integer index = 0;
-    private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private Float health; //Поле не может быть null, Значение поля должно быть больше 0
+    private Integer id;
+    private String name;
+    private Coordinates coordinates;
+    private java.time.ZonedDateTime creationDate;
+    private Float health;
     private boolean loyal;
-    private String achievements; //Поле может быть null
-    private AstartesCategory category; //Поле не может быть null
-    private Chapter chapter; //Поле может быть null
+    private String achievements;
+    private AstartesCategory category;
+    private Chapter chapter;
 
+    /**
+     * Class for Space Marine.
+     * @author Piven Danila @pivendanila.
+     */
     public SpaceMarine() {
         this.setCreationDate();
     }
@@ -82,6 +85,7 @@ public class SpaceMarine {
     public String getAchievements() {
         return this.achievements;
     }
+
 
     public String getCreationDate() {
         return this.creationDate.getDayOfMonth() + "." + this.creationDate.getMonth() + "." + this.creationDate.getYear()

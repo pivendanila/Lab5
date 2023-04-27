@@ -4,6 +4,11 @@ import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 import Run.CollectionManager;
 
+/**
+ * Class for displaying info about collection.
+ * @author Piven Danila @pivendanila.
+ */
+
 public class Info implements Command{
     private String name = "info";
     private final CollectionManager manager;

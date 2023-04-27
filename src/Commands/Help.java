@@ -6,6 +6,10 @@ import Run.CollectionManager;
 
 import java.util.HashMap;
 
+/**
+ * Class for displaying Help information.
+ * @author Piven Danila @pivendanila.
+ */
 public class Help implements Command{
     private String name = "help";
     private CollectionManager manager;

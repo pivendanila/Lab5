@@ -4,6 +4,10 @@ import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 import Run.CollectionManager;
 
+/**
+ * Class for showing content of collection.
+ * @author Piven Danila @pivendanila.
+ */
 public class Show implements Command{
     private String name = "show";
     private final CollectionManager manager;

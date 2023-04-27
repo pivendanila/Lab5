@@ -7,6 +7,10 @@ import Run.CollectionManager;
 
 import java.util.LinkedList;
 
+/**
+ * Class for Printing Descending of collection.
+ * @author Piven Danila @pivendanila.
+ */
 public class PrintDescending implements Command{
     private String name = "print_descending";
     private CollectionManager manager;

@@ -4,6 +4,11 @@ import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 import Run.CollectionManager;
 
+
+/**
+ * Class for clearing collection.
+ * @author Piven Danila @pivendanila.
+ */
 public class Clear implements Command{
     private String name = "clear";
     private final CollectionManager collectionManager;

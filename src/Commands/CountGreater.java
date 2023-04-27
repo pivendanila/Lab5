@@ -1,6 +1,5 @@
 package Commands;
 
-import Collections.AstartesCategory;
 import Collections.SpaceMarine;
 import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
@@ -10,6 +9,10 @@ import Run.CollectionManager;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/**
+ * Class for Counting elements by greating the Health value.
+ * @author Piven Danila @pivendanila.
+ */
 public class CountGreater implements Command{
     private String name = "count_greater_than_health";
     private CollectionManager manager;
