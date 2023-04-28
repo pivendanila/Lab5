@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,34 +36,44 @@ public class ExecuteScript implements Command{
 
     @Override
     public void execute(String[] args) throws WrongArgument, NotEnoughArguments {
-        if(args.length < 2) throw new NotEnoughArguments("Command requires \"path\" argument");
-        Path path;
-        path = Paths.get(args[1]);
-        recursionHistory.add(args[1].hashCode());
+        if(args.length < 2){
+            System.out.println("Command requires \"path\" argument");
+        }
+        else{
+            Path path;
+            path = Paths.get(args[1]);
+            char[] format = new char[4];
+            char[] right_format = ".txt".toCharArray();
+            String ppath = path.toString();
+            ppath.getChars(ppath.length()-4, ppath.length(), format, 0);
+            if (!Arrays.equals(format, right_format)){
+                System.out.println("This file doesn't have right format.");
+            }
+            else {
+                recursionHistory.add(args[1].hashCode());
 
-        try{
-            // check file permissions
-            if(!Files.exists(path)) throw new FileNotFoundException("File " + path + " not found");
-            if(!Files.isReadable(path)) throw new NoPermissionException("Cannot read file.");
-            if(!Files.isWritable(path)) throw new NoPermissionException("Cannot write to file.");
-        }
-        catch (FileNotFoundException e){
-            System.out.println("File " + path + " not found.");
-            return;
-        }
-        catch (NoPermissionException e){
-            System.out.print("No enough permissions to " + path + " - " + e.getMessage()); // permissions deny
-            return;
-        }
+                try {
+                    // check file permissions
+                    if (!Files.exists(path)) throw new FileNotFoundException("File " + path + " not found");
+                    if (!Files.isReadable(path)) throw new NoPermissionException("Cannot read file.");
+                    if (!Files.isWritable(path)) throw new NoPermissionException("Cannot write to file.");
+                } catch (FileNotFoundException e) {
+                    System.out.println("File " + path + " not found.");
+                    return;
+                } catch (NoPermissionException e) {
+                    System.out.print("No enough permissions to " + path + " - " + e.getMessage()); // permissions deny
+                    return;
+                }
 
-        try(BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(path));){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            System.out.println("Running " + path);
-            run(reader);
-            recursionHistory.clear();
-        }
-        catch (IOException e){
-            e.printStackTrace();
+                try (BufferedInputStream inputStream = new BufferedInputStream(Files.newInputStream(path));) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                    System.out.println("Running " + path+"\n");
+                    run(reader);
+                    recursionHistory.clear();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -90,7 +101,7 @@ public class ExecuteScript implements Command{
         }
     }
 
-    private void runCommand(Command command, String[] args) throws WrongArgument, NotEnoughArguments, NotEnoughArguments {
+    private void runCommand(Command command, String[] args) throws WrongArgument, NotEnoughArguments, NotEnoughArguments, IOException {
         if (command.getClass() == ExecuteScript.class) {
             if (ExecuteScript.recursionHistory.contains(args[1].hashCode())) {
                 System.out.println("Recursion! Command skipped!");

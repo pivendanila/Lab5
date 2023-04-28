@@ -32,6 +32,7 @@ public class Help implements Command{
         for(String command : this.commands.keySet()){
             System.out.println(command + ": " + this.commands.get(command).getDescription());
         }
+        System.out.println("\n");
         manager.updateHistory(getName());
     }
 

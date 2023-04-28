@@ -4,6 +4,7 @@ import Commands.*;
 import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,6 +82,8 @@ public class Executor {
             } catch (NotEnoughArguments | NoSuchElementException e) {
                 t = false;
                 System.out.println("Not enough arguments. " + e.getMessage());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 

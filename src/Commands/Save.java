@@ -4,8 +4,10 @@ import Exceptions.NotEnoughArguments;
 import Exceptions.WrongArgument;
 import Run.CollectionManager;
 
+import java.io.IOException;
+
 /**
- * Class for savinf the collection to the file.
+ * Class for savinf the collection to the file with generated uniq name.
  * @author Piven Danila @pivendanila.
  */
 public class Save implements Command{
@@ -17,13 +19,13 @@ public class Save implements Command{
 
     @Override
     public String getName() {
-
         return this.name;
     }
 
     @Override
-    public void execute(String[] args) throws WrongArgument, NotEnoughArguments {
+    public void execute(String[] args) throws WrongArgument, NotEnoughArguments, IOException {
         manager.updateHistory(getName());
+        manager.save();
     }
 
     @Override

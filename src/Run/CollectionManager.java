@@ -1,5 +1,6 @@
 package Run;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
@@ -16,7 +17,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -24,7 +28,7 @@ import java.util.LinkedList;
  * * @author Piven Danila @pivendanila.
 */
 public class CollectionManager {
-    private final Path path;
+    private Path path;
     final LinkedList<SpaceMarine> spacemarines;
     final private String type;
     final private java.time.ZonedDateTime date;
@@ -32,8 +36,7 @@ public class CollectionManager {
     private String history = "";
 
 
-    public CollectionManager(Path filepath) {
-        this.path = filepath;
+    public CollectionManager() {
         this.spacemarines = new LinkedList<>();
         this.type = String.valueOf(spacemarines.getClass());
         this.date = java.time.ZonedDateTime.now();
@@ -204,69 +207,84 @@ public class CollectionManager {
     /**
      * Method of filling collection from .xml file
      */
-    public void fill_from_file() {
-        try {
-            int cnt = 0;
-            String name = "";
-            Coordinates coordinates;
-            java.time.ZonedDateTime creationDate;
-            Float health;
-            boolean loyal;
-            String achievements;
-            AstartesCategory category;
-            Chapter chapter;
+    public void fill_from_file(Path path) {
+        char[] format = new char[4];
+        char[] right_format = ".xml".toCharArray();
+        String ppath = path.toString();
+        ppath.getChars(ppath.length()-4, ppath.length(), format, 0);
+        if (!Arrays.equals(format, right_format)){
+            System.out.println("This file doesn't have right format.");
+            System.exit(0);
+        }
+        else {
+            if (Files.exists(path)) {
+                try {
+                    int cnt = 0;
+                    String name = "";
+                    Coordinates coordinates;
+                    java.time.ZonedDateTime creationDate;
+                    Float health;
+                    boolean loyal;
+                    String achievements;
+                    AstartesCategory category;
+                    Chapter chapter;
 
-            DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document document = documentBuilder.parse(String.valueOf(path.toUri()));
-            Node root = document.getDocumentElement();
-            NodeList books = root.getChildNodes();
-            for (int i = 0; i < books.getLength(); i++) {
-                Node book = books.item(i);
-                SpaceMarine spacemarine = new SpaceMarine();
-                if (book.getNodeType() != Node.TEXT_NODE) {
-                    NodeList bookProps = book.getChildNodes();
-                    for (int j = 0; j < bookProps.getLength(); j++) {
-                        Node bookProp = bookProps.item(j);
-                        if (bookProp.getNodeType() != Node.TEXT_NODE) {
-                            if (i % 2 != 0 && j % 2 != 0) {
-                                switch (bookProp.getNodeName()) {
-                                    case "name":
-                                        spacemarine.setName(bookProp.getChildNodes().item(0).getTextContent());
-                                        break;
-                                    case "coordinates":
-                                        spacemarine.setCoordinates(bookProp.getChildNodes().item(0).getTextContent());
-                                        break;
-                                    case "health":
-                                        spacemarine.setHealth(Float.parseFloat(bookProp.getChildNodes().item(0).getTextContent()));
-                                        break;
-                                    case "loyal":
-                                        spacemarine.setLoyal(Boolean.parseBoolean(bookProp.getChildNodes().item(0).getTextContent()));
-                                        break;
-                                    case "achievements":
-                                        spacemarine.setAchievements(bookProp.getChildNodes().item(0).getTextContent());
-                                        break;
-                                    case "category":
-                                        spacemarine.setCategory(AstartesCategory.valueOf(bookProp.getChildNodes().item(0).getTextContent()));
-                                        break;
-                                    case "chapter":
-                                        spacemarine.setChapter(bookProp.getChildNodes().item(0).getTextContent());
-                                        break;
+                    DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                    Document document = documentBuilder.parse(String.valueOf(path.toUri()));
+                    Node root = document.getDocumentElement();
+                    NodeList books = root.getChildNodes();
+                    for (int i = 0; i < books.getLength(); i++) {
+                        Node book = books.item(i);
+                        SpaceMarine spacemarine = new SpaceMarine();
+                        if (book.getNodeType() != Node.TEXT_NODE) {
+                            NodeList bookProps = book.getChildNodes();
+                            for (int j = 0; j < bookProps.getLength(); j++) {
+                                Node bookProp = bookProps.item(j);
+                                if (bookProp.getNodeType() != Node.TEXT_NODE) {
+                                    if (i % 2 != 0 && j % 2 != 0) {
+                                        switch (bookProp.getNodeName()) {
+                                            case "name":
+                                                spacemarine.setName(bookProp.getChildNodes().item(0).getTextContent());
+                                                break;
+                                            case "coordinates":
+                                                spacemarine.setCoordinates(bookProp.getChildNodes().item(0).getTextContent());
+                                                break;
+                                            case "health":
+                                                spacemarine.setHealth(Float.parseFloat(bookProp.getChildNodes().item(0).getTextContent()));
+                                                break;
+                                            case "loyal":
+                                                spacemarine.setLoyal(Boolean.parseBoolean(bookProp.getChildNodes().item(0).getTextContent()));
+                                                break;
+                                            case "achievements":
+                                                spacemarine.setAchievements(bookProp.getChildNodes().item(0).getTextContent());
+                                                break;
+                                            case "category":
+                                                spacemarine.setCategory(AstartesCategory.valueOf(bookProp.getChildNodes().item(0).getTextContent()));
+                                                break;
+                                            case "chapter":
+                                                spacemarine.setChapter(bookProp.getChildNodes().item(0).getTextContent());
+                                                break;
+                                        }
+                                    }
                                 }
                             }
                         }
+                        if (i > 0 && i % 2 != 0) {
+                            number_of_marines++;
+                            spacemarine.setIndex(number_of_marines);
+                            spacemarine.setId(idGenerator());
+                            spacemarines.add(spacemarine);
+                        }
+
                     }
-                }
-                if (i > 0 && i % 2 != 0) {
-                    number_of_marines++;
-                    spacemarine.setIndex(number_of_marines);
-                    spacemarine.setId(idGenerator());
-                    spacemarines.add(spacemarine);
-                }
 
+                } catch (ParserConfigurationException | SAXException | IOException ex) {
+                    ex.printStackTrace(System.out);
+                }
+            } else {
+                System.out.println("File is not exists. Try again.");
+                System.exit(0);
             }
-
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            ex.printStackTrace(System.out);
         }
     }
 
@@ -274,11 +292,15 @@ public class CollectionManager {
      * Method of saving collection to the .xml file
      */
     public void save() throws IOException {
-        FileWriter fw = new FileWriter( "saved.xml");
+        String filename = idGenerator()+".xml";
+        FileWriter fw = new FileWriter(filename);
+        System.out.println("Collection was saved to file "+filename + ".\n");
         fw.write("<?xml version=\"1.0\"?>\n");
         fw.write("<SpaceMarines>\n");
         for(SpaceMarine marine : spacemarines) {
             fw.write("\t<SpaceMarine>\n");
+            fw.write("\t\t<id>"+marine.getId()+"</id>\n");
+            fw.write("\t\t<index>"+marine.getIndex()+"</index>\n");
             fw.write("\t\t<name>"+marine.getName()+"</name>\n");
             fw.write("\t\t<coordinates>"+marine.getCoordinates()+"</coordinates>\n");
             fw.write("\t\t<health>"+marine.getHealth()+"</health>\n");

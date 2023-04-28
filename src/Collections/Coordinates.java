@@ -12,7 +12,6 @@ public class Coordinates {
     public Coordinates(String coordinates) {
         this.setX(coordinates.split(" ")[0]);
         this.setY(coordinates.split(" ")[1]);
-
     }
     /**
      * setter for x-coordinate
